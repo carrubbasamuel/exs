@@ -1,0 +1,8 @@
+.pexels img{
+    border-radius: 20px;
+    transform: scale(1);
+}
+
+.pexels img:hover{
+    transform: scale(1.02);
+}

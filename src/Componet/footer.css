@@ -1,0 +1,28 @@
+.footer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.111);
+    padding: 50px;
+}
+
+.footer ul{
+    list-style: none;
+    
+}
+
+.footer img{
+    width: 150px;
+    border-radius: 50%;
+}
+
+.social svg{
+
+    font-size: 30px;
+    padding: 10px;
+    
+}
+
+.social svg:hover{
+    color: rgba(0, 0, 0, 0.314);
+}
