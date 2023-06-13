@@ -3,31 +3,35 @@ import '../pexels.css'
 import { Row, Col } from 'react-bootstrap';
 
 export default function PexelsImg() {
-  
-  const [photos, setPhotos] = useState([]);
-
   const apiKey = 'lprxOfsVplbt7ilnXzwE8VVURZQ2GZ70uJSmJ2WzcaACEOuO892xhb83';
 
-//*useEffect è un componente che viene renderizzato quando il componente viene montato
+  let saveimg = localStorage.getItem('img');
+  const [photos, setPhotos] = useState(saveimg ? JSON.parse(saveimg) : []);
+
   useEffect(() => {
-    fetch('https://api.pexels.com/v1/curated?page=2', {
-      method: 'GET',
-      headers: {
-        'Authorization': apiKey
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setPhotos(data.photos);
+    try {
+      fetch('https://api.pexels.com/v1/curated?page=2', {
+        method: 'GET',
+        headers: {
+          'Authorization': apiKey
+        }
       })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-      //*clean up function
-      return (
-        setPhotos([])
-      )
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          const photosData = data.photos;
+          localStorage.setItem('img', JSON.stringify(photosData));
+          setPhotos(photosData);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+  
+  
 
   return (
     <Row className="pexels gap-4 justify-content-center align-items-center mt-5 mb-5">
