@@ -8,8 +8,9 @@ function App() {
     <>
     <Navbar />
 
-    {/* GET data from pexels */}
-    <PexelsImg />
+
+    
+    <PexelsImg />{/* GET data from pexels */}
 
 
 
@@ -24,3 +25,4 @@ function App() {
 }
 
 export default App;
+

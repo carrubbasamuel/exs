@@ -1,19 +1,15 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../pexels.css'
 import { Row, Col } from 'react-bootstrap';
 
-export default class PexelsImg extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      photos: []
-    };
-  }
-
+export default function PexelsImg() {
   
-  componentDidMount() {
-    const apiKey = 'lprxOfsVplbt7ilnXzwE8VVURZQ2GZ70uJSmJ2WzcaACEOuO892xhb83';
+  const [photos, setPhotos] = useState([]);
 
+  const apiKey = 'lprxOfsVplbt7ilnXzwE8VVURZQ2GZ70uJSmJ2WzcaACEOuO892xhb83';
+
+//*useEffect è un componente che viene renderizzato quando il componente viene montato
+  useEffect(() => {
     fetch('https://api.pexels.com/v1/curated?page=2', {
       method: 'GET',
       headers: {
@@ -22,24 +18,25 @@ export default class PexelsImg extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({ photos: data.photos });
+        setPhotos(data.photos);
       })
       .catch(error => {
         console.error('Error:', error);
       });
-  }
+      //*clean up function
+      return (
+        setPhotos([])
+      )
+  }, []);
 
-  render() {
-    const { photos } = this.state;
+  return (
+    <Row className="pexels gap-4 justify-content-center align-items-center mt-5 mb-5">
+      {photos.map((element, index) => (
+        <Col key={index} md={3}>
+          <img className='img-fluid' src={element.src.original} alt="" />
+        </Col>
+      ))}
+    </Row>
+  );
 
-    return (
-      <Row className="pexels gap-4 justify-content-center align-items-center mt-5 mb-5">
-        {photos.map(element => (
-          <Col md={3}>
-            <img className='img-fluid' key={element.id} src={element.src.original} alt="" />
-          </Col>
-        ))}
-      </Row>
-    );
-  }
 }
